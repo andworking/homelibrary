@@ -17,10 +17,10 @@ services:
       # - "traefik.http.routers.traefik.rule=Host(`traefik.dotgs.ru`)" # Заменить домен
       # https
       - "traefik.http.routers.traefik-secure.entrypoints=https"
-      - "traefik.http.routers.traefik-secure.rule=Host(`traefik.smarthands.ru`)" # Заменить домен
+      - "traefik.http.routers.traefik-secure.rule=Host(`traefik.site.ru`)" # Заменить домен
       # basic auth
       - "traefik.http.routers.traefik-secure.middlewares=traefik-auth"
-      - "traefik.http.middlewares.traefik-auth.basicauth.users=andrey:$$apr1$$lG0ZoudL$$MvvufBT/W0MjGhp118ndg0" # Указать логин и хеш пароля (htpasswd)
+      - "traefik.http.middlewares.traefik-auth.basicauth.users=user:hash" # Указать логин и хеш пароля (htpasswd)
 
     ports:
       - 80:80
