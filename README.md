@@ -13,6 +13,7 @@ Docker compose, ubuntu, traefik
 3. Затем я октрыл порты в роутере на свой домашний сервер (в дальнейшем HVPS).
 4. Один из методов безопасности, решил изменить порт ssh и поставил авторизацию только по публичному ключу.
 5. В пути /opt/ создаю папку /opt/projekt1.
-6. Далее создаю файлы sudo mkdir custom && sudo touch docker-compose.yml traefik.yml acme.json && sudo chmod acme.json - создал папку custom где будут работать приложения, файл acme.json для получения данных сертификата, файлы .yml само приложение Traefik и его настройки (traefik.yml).
-7. Запускаю приложение Traefik. docker-compose up -d .
-8. Теперь можно подключать другие приложения. Перехожу в папку /opt/projekt1/custom/ и создаю папку с сервисами в которых будут содержаться настройки сервисов.
+6. Далее создал файлы sudo mkdir custom && sudo touch docker-compose.yml traefik.yml acme.json && sudo chmod acme.json - создал папку custom где будут работать сервисы, файл acme.json для получения данных сертификата, файлы .yml сам сервис Traefik и его настройки (traefik.yml).
+7. Запуск Traefik. docker-compose up -d .
+8. Теперь можно подключать другие сервисы. Перехожу в папку /opt/projekt1/custom/ и создаю папку с сервисами в которых будут содержаться их настройки.
+9. Запуск сервисов - переход в папку и запуск командой dicker-compose up -d .
