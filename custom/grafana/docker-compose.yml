@@ -1,0 +1,50 @@
+services:
+
+  node-exporter:
+    image: prom/node-exporter
+    container_name: exporter
+    ports:
+      - 9100:9100
+    restart: unless-stopped
+    networks:
+      - traefik
+
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - 9090:9090
+    restart: unless-stopped
+    networks:
+      - traefik
+
+  grafana:
+    image: grafana/grafana-enterprise
+    container_name: grafana
+    restart: unless-stopped
+    user: $UID:$GID
+    environment:
+      - GF_LOG_LEVEL=debug
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=bochka12!
+      - GF_USERS_ALLOW_SIGN_UP=false
+    volumes:
+      - /opt/projekt1/custom/grafana/grafana_storage:/var/lib/grafana
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.grafana-secure.entrypoints=https
+      - traefik.http.routers.grafana-secure.rule=Host(`grafana.smarthands.ru`)
+      - traefik.http.routers.grafana-secure.service=grafana
+      - traefik.http.services.grafana.loadbalancer.server.port=3000
+    networks:
+      - traefik
+
+networks:
+  traefik:
+    name: traefik
+    driver: bridge
+    external: true
+volumes:
+  grafana_storage: {}
