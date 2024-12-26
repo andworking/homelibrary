@@ -28,9 +28,9 @@ services:
     environment:
       # increases the log level from info to debug
       - GF_LOG_LEVEL=debug
-      - ROOT_URL=https://grafana.smarthands.ru
+      - ROOT_URL=https://grafana.site.ru
       - GF_SECURITY_ADMIN_USER=admin
-      - GF_SECURITY_ADMIN_PASSWORD=bochka12!
+      - GF_SECURITY_ADMIN_PASSWORD=admin
       - GF_USERS_ALLOW_SIGN_UP=false
     volumes:
       - '/opt/projekt1/custom/grafana/grafana_storage:/var/lib/grafana'
