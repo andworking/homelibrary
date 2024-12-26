@@ -6,7 +6,7 @@ services:
     restart: unless-stopped
     environment:
       - RABBITMQ_DEFAULT_USER=admin
-      - RABBITMQ_DEFAULT_PASS=bochka12!
+      - RABBITMQ_DEFAULT_PASS=admin
       - RABBITMQ_SERVER_ADDITIONAL_ERL_ARGS=-rabbit disk_free_limit 2147483648
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
