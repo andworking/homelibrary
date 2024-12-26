@@ -1,0 +1,30 @@
+
+services:
+
+ portainer:
+
+  image: portainer/portainer-ce:latest
+  ports:
+  container_name: portainer
+    - 9000:9000
+  volumes:
+    - /var/run/docker.sock:/var/run/docker.sock
+    - /opt/projekt1/custom/portainer/data:/data
+    - /etc/localtime:/etc/localtime:ro
+  labels:
+    - "traefik.enable=true"
+    - "traefik.http.routers.portainer.entrypoints=https"
+    - "traefik.http.routers.portainer.rule=Host(`portainer.smarthands.ru`)"
+    - "traefik.http.routers.portainer.service=portainer"
+    - "traefik.http.services.portainer.loadbalancer.server.port=9000"
+  networks:
+    traefik:
+  security_opt:
+    - no-new-privileges=true
+  restart: unless-stopped
+
+networks:
+  traefik:
+    name: traefik
+    driver: bridge
+    external: true
