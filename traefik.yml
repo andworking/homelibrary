@@ -1,0 +1,39 @@
+api:
+  dashboard: true
+  insecure: false
+  debug: true
+
+entryPoints:
+  http:
+    address: ":80"
+    http:
+      redirections:
+        entryPoint:
+          to: https
+          scheme: https
+  https:
+    address: ":443"
+    http:
+      tls:
+        certResolver: letsEncrypt
+
+serversTransport:
+  insecureSkipVerify: true
+
+providers:
+  docker:
+    endpoint: "unix:///var/run/docker.sock"
+    exposedByDefault: false
+    network: traefik
+  file:
+    directory: /custom
+    watch: true
+
+certificatesResolvers:
+  letsEncrypt:
+    acme:
+      email: faf369@mail.ru # Указать почту для letsEncrypt
+      storage: /acme.json
+      caServer: "https://acme-v02.api.letsencrypt.org/directory"
+      httpChallenge:
+        entryPoint: http

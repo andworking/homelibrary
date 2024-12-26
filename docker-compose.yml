@@ -1,0 +1,38 @@
+services:
+  traefik:
+    image: traefik:latest
+    container_name: traefik
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      # Исправить путь к директории traefik
+      - /opt/projekt1/traefik.yml:/traefik.yml:ro
+      - /opt/projekt1/acme.json:/acme.json
+      - /opt/projekt1/log:/var/log/traefik
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.traefik-secure.service=api@internal"
+      # # http
+      # - "traefik.http.routers.traefik.entrypoints=http"
+      # - "traefik.http.routers.traefik.rule=Host(`traefik.dotgs.ru`)" # Заменить домен
+      # https
+      - "traefik.http.routers.traefik-secure.entrypoints=https"
+      - "traefik.http.routers.traefik-secure.rule=Host(`traefik.smarthands.ru`)" # Заменить домен
+      # basic auth
+      - "traefik.http.routers.traefik-secure.middlewares=traefik-auth"
+      - "traefik.http.middlewares.traefik-auth.basicauth.users=andrey:$$apr1$$lG0ZoudL$$MvvufBT/W0MjGhp118ndg0" # Указать логин и хеш пароля (htpasswd)
+
+    ports:
+      - 80:80
+      - 443:443
+    networks:
+      traefik: #создаем сеть docker network create traefik
+    security_opt:
+      - no-new-privileges=true
+    restart: unless-stopped
+
+networks:
+  traefik:
+    name: traefik
+    driver: bridge
+    external: true
